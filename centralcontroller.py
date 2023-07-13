@@ -1,10 +1,7 @@
 import requests
-#import random
-#import math
 import urllib. request
 import numpy as np
 import joblib
-#import threading
 import time
 import json
 
@@ -38,12 +35,10 @@ def fetch_precipitation_data(api_key, city_name):
 
 
 def thingspeak_publish(val1):
-    #threading.Timer(15,thingspeak).start()
     URL='https://api.thingspeak.com/update?api_key='
     KEY='Z7BY88XQIZNIPFB0'
     HEADER='&field4={val:.2f}'.format(val=val1)
     new_URL=URL+KEY+HEADER
-    #v=urllib.request(new_URL)
     data=urllib.request.urlopen(new_URL)
     print(data)
     print("succesfully published")
@@ -56,7 +51,7 @@ result=[0.00,0.00]
 def thinkspeak_subscribe():
     # ThingSpeak API endpoint and parameters
     api_endpoint = "https://api.thingspeak.com/channels/2094506/feeds.json"
-    api_key = "A59BQKALSU14W6X8"  # Replace with your ThingSpeak read API key
+    api_key = "READ_API_KEY"  # Replace with your ThingSpeak read API key
     results = 1   # Number of latest results to retrieve
 
     # Construct the API request URL
@@ -75,7 +70,7 @@ def thinkspeak_subscribe():
         print(entries)
         if len(entries) > 0:
             try:
-                if entries[0].get("field1")!=None and entries[0].get("field2")!=None:
+                if entries[0].get("field1")!=None and entries[0].get("field2")!=None:    #ENTER YOUR FIELDS ACCORDINGLY TO THE THINKSPEAK CLOUD
                     result[0] = entries[0].get("field1")
                     result[1] = entries[0].get("field2")
             except:
@@ -87,26 +82,23 @@ def thinkspeak_subscribe():
 
 
 # Provide your OpenWeatherMap API key and the city name for the desired location
-api_key = "d4c7d955b03c5afb379b60c7a17860e1"
-city_name = "Kolkata,IN"
+api_key = "API_KEY"
+city_name = "ENTER_CTY_NAME"
 
 
 
 
 while True:
-    precipitation=fetch_precipitation_data("d4c7d955b03c5afb379b60c7a17860e1", "Kolkata,IN")
+    precipitation=fetch_precipitation_data(api_key, city_name)
 
     # Print the precipitation data
     if precipitation is not None:
         print(f"Precipitation: {precipitation} mm")
     
     thinkspeak_subscribe()
-#    if result[0] is None:
- #       result[0]=33.56
-  #  if result[1] is None:
-#        result[1]=52.00    
     print("temperature: {0} , humidity:{1}",result[0],result[1])
     # Preprocess the data
+    #Check  for  the third input
     data = np.array([[result[0], result[1],1,precipitation]] )
     # Apply the ML model for prediction
     prediction = model.predict(data)

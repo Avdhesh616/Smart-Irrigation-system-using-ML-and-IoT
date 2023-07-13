@@ -20,7 +20,7 @@ Here The Motor in the circuit diagram has been denoted as LED bulb.
 # Working
 The Node MCU board is a compact electronic device with internet connectivity and programmability. It incorporates a DHT11 sensor to measure temperature and humidity.
 
-The Node MCU board acquires temperature and humidity readings from the DHT11 sensor. The code for the Node MCU board is provided in the file "".
+The Node MCU board acquires temperature and humidity readings from the DHT11 sensor. The code for the Node MCU board is provided in the file "irrigation_system.ino".
 
 These readings are then transmitted to the ThingSpeak IoT cloud platform. ThingSpeak is a cloud-based service designed for data collection, analysis, and visualization from IoT devices.
 
